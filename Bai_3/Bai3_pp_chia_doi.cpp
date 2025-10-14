@@ -1,3 +1,5 @@
+//Giai tong quat
+
 #include<bits/stdc++.h>
 using namespace std;
 
