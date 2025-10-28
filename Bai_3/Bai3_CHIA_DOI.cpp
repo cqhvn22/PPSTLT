@@ -1,3 +1,5 @@
+/* cqhvn */
+
 //Giai tong quat
 
 #include<bits/stdc++.h>
