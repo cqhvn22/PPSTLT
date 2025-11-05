@@ -141,7 +141,6 @@ void Lagrange(double *X, double *Y, int n){
 void NEWTON(double *X, double *Y, int n){
     PT Nt(n);
     PT Nl(n);
-    int c = 1;
 
     double **a = new double *[n + 1];
 
@@ -150,7 +149,7 @@ void NEWTON(double *X, double *Y, int n){
         a[0][i] = Y[i];
 
     for(int i = 1; i <= n; i++){
-        a[i] = new double[n - i];
+        a[i] = new double[n - i + 1];
         for(int j = 0; j <= n - i; j++){
             a[i][j] = (a[i - 1][j + 1] - a[i - 1][j]) / (X[j + i] - X[j]);
 
@@ -169,7 +168,7 @@ void NEWTON(double *X, double *Y, int n){
             if(j == n - i){ // TH lui (2)
                 PT p(0);
                 p.a[0] = 1;
-                for(int k = i; k > 0; k--){
+                for(int k = n; k > n - i; k--){
                     PT t(1);
                     t.a[1] = 1;
                     t.a[0] = - X[k];
@@ -184,7 +183,7 @@ void NEWTON(double *X, double *Y, int n){
     //Dung (1) hoac (2) ung voi tien hoc lui
 
     Nt = Nt + Y[0];
-    Nl = Nl + Y[n - c++];
+    Nl = Nl + Y[n];
 
     cout << endl << "Nt(x) = " << Nt << endl;
     cout << endl << "Nl(x) = " << Nl << endl;
@@ -196,13 +195,12 @@ void NEWTON(double *X, double *Y, int n){
 
 int GiaiThua(int n){
     if(n == 0 || n == 1) return 1;
-    else return n * gt(n - 1);
+    else return n * GiaiThua(n - 1);
 }
 
 void NEWTON_CD(double *X, double *Y, int n){
     PT Nt(n);
     PT Nl(n);
-    int c = 1;
 
     double **a = new double *[n + 1];
 
@@ -213,7 +211,7 @@ void NEWTON_CD(double *X, double *Y, int n){
     for(int i = 1; i <= n; i++){
         a[i] = new double[n - i];
         for(int j = 0; j <= n - i; j++){
-            a[i][j] = (a[i - 1][j + 1] - a[i - 1][j]) / GiaiThua(i);
+            a[i][j] = (a[i - 1][j + 1] - a[i - 1][j]);
             if(j == 0){ // TH lui (1)
                 PT p(0);
                 p.a[0] = 1;
@@ -223,19 +221,19 @@ void NEWTON_CD(double *X, double *Y, int n){
                     t.a[0] = - X[k];
                     p = p * t;
                 }
-                Nt = Nt + p * a[i][j];
+                Nt = Nt + p * (a[i][j] / GiaiThua(i));
             }
 
             if(j == n - i){ // TH lui (2)
                 PT p(0);
                 p.a[0] = 1;
-                for(int k = i; k > 0; k--){
+                for(int k = n; k > n - i; k--){
                     PT t(1);
                     t.a[1] = 1;
                     t.a[0] = - X[k];
                     p = p * t;
                 }
-                Nl = Nl + p * a[i][j];
+                Nl = Nl + p * (a[i][j] / GiaiThua(i));
             }
         }
 
@@ -244,7 +242,7 @@ void NEWTON_CD(double *X, double *Y, int n){
     //Dung (1) hoac (2) ung voi tien hoc lui
 
     Nt = Nt + Y[0];
-    Nl = Nl + Y[n - c++];
+    Nl = Nl + Y[n];
 
     cout << endl << "Nt(x) = " << Nt << endl;
     cout << endl << "Nl(x) = " << Nl << endl;
@@ -254,12 +252,12 @@ void NEWTON_CD(double *X, double *Y, int n){
 }
 
 int main(){
-    double X[] = {-1,0,1}; // Mang gia tri x
-    double Y[] = {0.5,1,2}; // Mang gia tri y = f(x)
+    double X[] = {-1,0,1,2}; // Mang gia tri x
+    double Y[] = {3,0,2,1}; // Mang gia tri y = f(x)
 
-    Lagrange(X, Y, 2); // n = 2
+    Lagrange(X, Y, 3); // n = 2
 
-    NEWTON(X, Y, 2); // Newton ko cach deu
+    NEWTON(X, Y, 3); // Newton ko cach deu
 
-    NEWTON_CD(X, Y, 2); // Newton cach deu
+    NEWTON_CD(X, Y, 3); // Newton cach deu
 }
