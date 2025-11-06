@@ -201,6 +201,7 @@ int GiaiThua(int n){
 void NEWTON_CD(double *X, double *Y, int n){
     PT Nt(n);
     PT Nl(n);
+    double h = X[1] - X[0];
 
     double **a = new double *[n + 1];
 
@@ -219,7 +220,7 @@ void NEWTON_CD(double *X, double *Y, int n){
                     PT t(1);
                     t.a[1] = 1;
                     t.a[0] = - X[k];
-                    p = p * t;
+                    p = p * t * (1 / h);
                 }
                 Nt = Nt + p * (a[i][j] / GiaiThua(i));
             }
@@ -231,7 +232,7 @@ void NEWTON_CD(double *X, double *Y, int n){
                     PT t(1);
                     t.a[1] = 1;
                     t.a[0] = - X[k];
-                    p = p * t;
+                    p = p * t * (1 / h);
                 }
                 Nl = Nl + p * (a[i][j] / GiaiThua(i));
             }
@@ -255,7 +256,7 @@ int main(){
     double X[] = {-1,0,1,2}; // Mang gia tri x
     double Y[] = {3,0,2,1}; // Mang gia tri y = f(x)
 
-    Lagrange(X, Y, 3); // n = 2
+    Lagrange(X, Y, 3); // n = 3
 
     NEWTON(X, Y, 3); // Newton ko cach deu
 
