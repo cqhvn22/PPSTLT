@@ -107,12 +107,6 @@ public:
     friend void FADDEEV_LEVERIER(MATRIX A);
 };
 
-double det_3_3(MATRIX M){
-    if (M.m != 3 || M.n != 3) return 0;
-    return M.a[0][0] * M.a[1][1] * M.a[2][2] + M.a[0][1] * M.a[1][2] * M.a[2][0] + M.a[1][0] * M.a[2][1] * M.a[0][2]
-    - (M.a[0][2] * M.a[1][1] * M.a[2][0] + M.a[1][0] * M.a[0][1] * M.a[2][2] + M.a[2][1] * M.a[1][2] * M.a[0][0]);
-}
-
 double trace(MATRIX M){
     double rs = 0;
     if(M.m == M.n){
