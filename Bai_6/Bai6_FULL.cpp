@@ -9,7 +9,6 @@ class PT{
 public:
     int n;
     double *a;
-    bool active = false;
 
     PT(){
         n = 0;
@@ -26,7 +25,6 @@ public:
         n = x;
         a = new double[n + 1];
         for (int i = 0; i <= n; i++) a[i] = y[i];
-        active = true;
     }
 
     friend istream& operator >> (istream &in, PT &p){
@@ -110,6 +108,7 @@ void Lagrange(double *X, double *Y, int n){
 
     for(int i = 0; i <= n; i++){
         PT p(0);
+        p.a[0] = 1;
         cout << "P" << i << "(x) = ";
         for(int j = 0; j <= n; j++){
             if(i != j){
@@ -118,13 +117,7 @@ void Lagrange(double *X, double *Y, int n){
                 arr[0] = -X[j];
                 PT q(1, arr);
                 q = q * (1.0 / (X[i] - X[j]));
-                if(!p.active) {
-                    p = q;
-                    p.active = true;
-                }
-                else {
-                    p = p * q;
-                }
+                p = p * q;
             }
         }
 
@@ -256,7 +249,7 @@ int main(){
     double X[] = {-1,0,1,2}; // Mang gia tri x
     double Y[] = {3,0,2,1}; // Mang gia tri y = f(x)
 
-    Lagrange(X, Y, 3); // n = 3
+    Lagrange(X, Y, 3); // n = 2
 
     NEWTON(X, Y, 3); // Newton ko cach deu
 
