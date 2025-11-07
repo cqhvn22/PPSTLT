@@ -166,7 +166,7 @@ void NEWTON(double *X, double *Y, int n){
 
     }
 
-    //Dung (1) hoac (2) ung voi tien hoc lui
+    //Dung (1) hoac (2) ung voi tien hoac lui
 
     Nt = Nt + Y[0];
     Nl = Nl + Y[n];
@@ -226,7 +226,7 @@ void NEWTON_CD(double *X, double *Y, int n){
 
     }
 
-    //Dung (1) hoac (2) ung voi tien hoc lui
+    //Dung (1) hoac (2) ung voi tien hoac lui
 
     Nt = Nt + Y[0];
     Nl = Nl + Y[n];
