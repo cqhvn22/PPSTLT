@@ -21,12 +21,6 @@ public:
         for(int i = n; i >= 0; i--) a[i] = 0;
     }
 
-    PT(int x, double *y){
-        n = x;
-        a = new double[n + 1];
-        for (int i = 0; i <= n; i++) a[i] = y[i];
-    }
-
     friend istream& operator >> (istream &in, PT &p){
         in >> p.n;
         p.a = new double[p.n + 1];
@@ -112,10 +106,9 @@ void Lagrange(double *X, double *Y, int n){
         cout << "P" << i << "(x) = ";
         for(int j = 0; j <= n; j++){
             if(i != j){
-                double arr[2]; // (x - X[i]) -> he so x la 1
-                arr[1] = 1; // set he so x la 1
-                arr[0] = -X[j];
-                PT q(1, arr);
+                PT q(1); // (x - X[i]) -> he so x la 1
+                q.a[1] = 1; // set he so x la 1
+                q.a[0] = -X[j];
                 q = q * (1.0 / (X[i] - X[j]));
                 p = p * q;
             }
